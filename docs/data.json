@@ -1,0 +1,33 @@
+{
+    "project": {
+        "name": "swtch",
+        "version": "0.0.0"
+    },
+    "files": {
+        "src/index.js": {
+            "name": "src/index.js",
+            "modules": {
+                "swtch": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "swtch": {
+            "name": "swtch",
+            "submodules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "src/index.js",
+            "line": 5,
+            "description": "AMD and CJS module."
+        }
+    },
+    "classes": {},
+    "classitems": [],
+    "warnings": []
+}

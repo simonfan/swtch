@@ -1,0 +1,5 @@
+//     swtch
+//     (c) simonfan
+//     swtch is licensed under the MIT terms.
+
+define("swtch",["require","exports","module","lodash","subject"],function(t,i,n){{var a=t("lodash"),s=t("subject");n.exports=s({initialize:function(t){this.situations=[],a.each(t,function(t){this.situation(t.condition,t.callback)},this)},situation:function(t,i){if(1===arguments.length)return this.unmatched(arguments[0]);var n={callback:i};return a.isString(t)?n.test=function(i){return t===i}:a.isRegExp(t)?n.test=t.test:a.isFunction(t)&&(n.test=t),this.situations.push(n),this},evaluate:function(t){var i=a.find(this.situations,function(i){return i.test.call(this,t)},this),n=i?i.callback:this.unmatchedCallback;return this.execCallback(n,t)},exec:function(t){var i=!1;return a.each(this.situations,function(n){n.test(t)&&(i=!0,this.execCallback(n.callback,t))},this),i||this.execCallback(this.unmatchedCallback,t),this},execCallback:function(t,i){return t.call(this,i)},unmatched:function(t){return this.unmatchedCallback=t,this},unmatchedCallback:a.noop})}});
