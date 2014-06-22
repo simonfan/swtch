@@ -28,6 +28,184 @@
         }
     },
     "classes": {},
-    "classitems": [],
-    "warnings": []
+    "classitems": [
+        {
+            "file": "src/index.js",
+            "line": 24,
+            "description": "Basically creates the situation array and\nadds situations if passed an array of situations\nat start.",
+            "params": [
+                {
+                    "name": "situations",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 44,
+            "description": "Transforms the received condition into a function\nthat when ran returns either true or false.",
+            "params": [
+                {
+                    "name": "condition",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 70,
+            "description": "Defines a situation/case. Basically converts the\ncondiition passed into a function that returns either true or false\nand adds the situation to the tail of the situations array.\n\nSituations are ordered and those added first have priority over those\nadded later.",
+            "params": [
+                {
+                    "name": "condition",
+                    "description": "[description]",
+                    "type": "[type]"
+                },
+                {
+                    "name": "callback",
+                    "description": "[description]",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 109,
+            "description": "Defines the callback to be executed in case no match\nis found.",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "[description]",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 124,
+            "description": "The property that holds the callback function that will\nbe executed in case no match is found for the value.\nBy default it is an noop.",
+            "type": "{[type]}",
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 133,
+            "description": "Executes the first situation found.\nRemember: the situations are stored in an array\nby order of addition. Thus, situations added first will have\npriority over those added later.",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 154,
+            "description": "Executes all situations that match the value, in the order they were added.",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/index.js",
+            "line": 185,
+            "description": "Executes the callback of the situation.\nShould be overridden for custom behaviour.",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "[description]",
+                    "type": "Function"
+                },
+                {
+                    "name": "value",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nBasically creates the situation array and\nadds situations if passed an array of situations\nat start.",
+            "line": " src/index.js:24"
+        },
+        {
+            "message": "Missing item type\nTransforms the received condition into a function\nthat when ran returns either true or false.",
+            "line": " src/index.js:44"
+        },
+        {
+            "message": "Missing item type\nDefines a situation/case. Basically converts the\ncondiition passed into a function that returns either true or false\nand adds the situation to the tail of the situations array.\n\nSituations are ordered and those added first have priority over those\nadded later.",
+            "line": " src/index.js:70"
+        },
+        {
+            "message": "Missing item type\nDefines the callback to be executed in case no match\nis found.",
+            "line": " src/index.js:109"
+        },
+        {
+            "message": "Missing item type\nThe property that holds the callback function that will\nbe executed in case no match is found for the value.\nBy default it is an noop.",
+            "line": " src/index.js:124"
+        },
+        {
+            "message": "Missing item type\nExecutes the first situation found.\nRemember: the situations are stored in an array\nby order of addition. Thus, situations added first will have\npriority over those added later.",
+            "line": " src/index.js:133"
+        },
+        {
+            "message": "Missing item type\nExecutes all situations that match the value, in the order they were added.",
+            "line": " src/index.js:154"
+        },
+        {
+            "message": "Missing item type\nExecutes the callback of the situation.\nShould be overridden for custom behaviour.",
+            "line": " src/index.js:185"
+        }
+    ]
 }

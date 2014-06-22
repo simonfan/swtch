@@ -42,6 +42,32 @@ define(function (require, exports, module) {
 		},
 
 		/**
+		 * Transforms the received condition into a function
+		 * that when ran returns either true or false.
+		 *
+		 * @param  {[type]} condition [description]
+		 * @return {[type]}           [description]
+		 */
+		parseCondition: function parseCondition(condition) {
+
+			if (_.isString(condition) || _.isNumber(condition)) {
+
+				return function testStringCondition(value) {
+					return condition === value;
+				};
+
+			} else if (_.isRegExp(condition)) {
+
+				return _.bind(condition.test, condition);
+
+			} else if (_.isFunction(condition)) {
+
+				return condition;
+
+			}
+		},
+
+		/**
 		 * Defines a situation/case. Basically converts the
 		 * condiition passed into a function that returns either true or false
 		 * and adds the situation to the tail of the situations array.
@@ -67,25 +93,10 @@ define(function (require, exports, module) {
 			} else {
 				// otherwise, the call defines a situation
 
-				// callback is directly set.
-				var situation = { callback: callback };
-
-				// parse condition.
-				if (_.isString(condition)) {
-
-					situation.test = function (value) {
-						return condition === value;
-					};
-
-				} else if (_.isRegExp(condition)) {
-
-					situation.test = _.bind(condition.test, condition);
-
-				} else if (_.isFunction(condition)) {
-
-					situation.test = condition;
-
-				}
+				var situation = {
+					callback: callback,
+					test    : this.parseCondition(condition)
+				};
 
 				// add to situations
 				this.situations.push(situation);

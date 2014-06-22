@@ -1,17 +1,17 @@
 {
-  "name": "swtch",
-  "main": "built/swtch.js",
-  "version": "0.0.0",
-  "description": "Some module...",
-  "dependencies": {
-    "lodash": "~2.4.1",
-    "subject": "~0.5.9"
-  },
-  "devDependencies": {
-    "requirejs": "*",
-    "requirejs-text": "*",
-    "underscore": "*",
-    "jquery": "*",
-    "qunit": "*"
-  }
+	"name": "swtch",
+	"main": "built/swtch.js",
+	"version": "0.1.0",
+	"description": "Some module...",
+	"dependencies": {
+		"lodash": "~2.4.1",
+		"subject": "~0.5.9"
+	},
+	"devDependencies": {
+		"requirejs": "*",
+		"requirejs-text": "*",
+		"underscore": "*",
+		"jquery": "*",
+		"qunit": "*"
+	}
 }
