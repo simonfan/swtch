@@ -12,7 +12,7 @@
 
 /* jshint ignore:end */
 
-define('__swtch/find',['require','exports','module','lodash'],function (require, exports, module) {
+define('__swtch/evaluate',['require','exports','module','lodash'],function (require, exports, module) {
 	
 
 	var _ = require('lodash');
@@ -31,12 +31,12 @@ define('__swtch/find',['require','exports','module','lodash'],function (require,
 
 
 	/**
-	 * Find the findFirst case that matches the query.
+	 * Find the first case that matches the query.
 	 *
 	 * @param  {[type]} query [description]
 	 * @return {[type]}       [description]
 	 */
-	exports.findFirst = function findFirst(query) {
+	exports.first = function first(query) {
 		var matchedCase = _.find(this.cases, function (c_se) {
 			return this.match(c_se, query);
 		}, this);
@@ -52,12 +52,12 @@ define('__swtch/find',['require','exports','module','lodash'],function (require,
 	};
 
 	/**
-	 * Find findAll cases that match a given query.
+	 * Find all cases that match a given query.
 	 *
 	 * @param  {[type]} query [description]
 	 * @return {[type]}       [description]
 	 */
-	exports.findAll = function findAll(query) {
+	exports.all = function all(query) {
 
 		var matchedCases = _.filter(this.cases, function (c_se) {
 			return this.match(c_se, query);
@@ -108,7 +108,7 @@ define('__swtch/exec',['require','exports','module','lodash'],function (require,
 	 */
 	exports.execFirst = function execFirst(query) {
 
-		var matchedCase = this.findFirst(query);
+		var matchedCase = this.first(query);
 
 		if (matchedCase) {
 			return this.execCase(matchedCase, query);
@@ -122,7 +122,7 @@ define('__swtch/exec',['require','exports','module','lodash'],function (require,
 	 * @return {[type]}       [description]
 	 */
 	exports.exec = function exec(query) {
-		var matchedCases = this.findAll(query);
+		var matchedCases = this.all(query);
 
 		return _.map(matchedCases, function (c, index) {
 			return this.execCase(c, query);
@@ -157,7 +157,7 @@ define('__swtch/exec',['require','exports','module','lodash'],function (require,
 
 /* jshint ignore:end */
 
-define('swtch',['require','exports','module','lodash','subject','./__swtch/find','./__swtch/exec'],function (require, exports, module) {
+define('swtch',['require','exports','module','lodash','subject','./__swtch/evaluate','./__swtch/exec'],function (require, exports, module) {
 	
 
 	var _       = require('lodash'),
@@ -254,9 +254,8 @@ define('swtch',['require','exports','module','lodash','subject','./__swtch/find'
 		},
 	});
 
-
 	swtch
-		.assignProto(require('./__swtch/find'))
+		.assignProto(require('./__swtch/evaluate'))
 		.assignProto(require('./__swtch/exec'));
 });
 

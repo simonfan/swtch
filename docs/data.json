@@ -4,8 +4,8 @@
         "version": "0.0.0"
     },
     "files": {
-        "src/__swtch/exec.js": {
-            "name": "src/__swtch/exec.js",
+        "src/__swtch/evaluate.js": {
+            "name": "src/__swtch/evaluate.js",
             "modules": {
                 "swtch": 1
             },
@@ -13,8 +13,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "src/__swtch/find.js": {
-            "name": "src/__swtch/find.js",
+        "src/__swtch/exec.js": {
+            "name": "src/__swtch/exec.js",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -36,13 +36,60 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/__swtch/exec.js",
+            "file": "src/__swtch/evaluate.js",
             "line": 5,
             "description": "AMD and CJS module."
         }
     },
     "classes": {},
     "classitems": [
+        {
+            "file": "src/__swtch/evaluate.js",
+            "line": 20,
+            "description": "Finds the default case.",
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/__swtch/evaluate.js",
+            "line": 33,
+            "description": "Find the first case that matches the query.",
+            "params": [
+                {
+                    "name": "query",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
+        {
+            "file": "src/__swtch/evaluate.js",
+            "line": 54,
+            "description": "Find all cases that match a given query.",
+            "params": [
+                {
+                    "name": "query",
+                    "description": "[description]",
+                    "type": "[type]"
+                }
+            ],
+            "return": {
+                "description": "[description]",
+                "type": "[type]"
+            },
+            "class": "",
+            "module": "swtch"
+        },
         {
             "file": "src/__swtch/exec.js",
             "line": 20,
@@ -91,53 +138,6 @@
                 },
                 {
                     "name": "value",
-                    "description": "[description]",
-                    "type": "[type]"
-                }
-            ],
-            "return": {
-                "description": "[description]",
-                "type": "[type]"
-            },
-            "class": "",
-            "module": "swtch"
-        },
-        {
-            "file": "src/__swtch/find.js",
-            "line": 20,
-            "description": "Finds the default case.",
-            "return": {
-                "description": "[description]",
-                "type": "[type]"
-            },
-            "class": "",
-            "module": "swtch"
-        },
-        {
-            "file": "src/__swtch/find.js",
-            "line": 33,
-            "description": "Find the findFirst case that matches the query.",
-            "params": [
-                {
-                    "name": "query",
-                    "description": "[description]",
-                    "type": "[type]"
-                }
-            ],
-            "return": {
-                "description": "[description]",
-                "type": "[type]"
-            },
-            "class": "",
-            "module": "swtch"
-        },
-        {
-            "file": "src/__swtch/find.js",
-            "line": 54,
-            "description": "Find findAll cases that match a given query.",
-            "params": [
-                {
-                    "name": "query",
                     "description": "[description]",
                     "type": "[type]"
                 }
@@ -222,6 +222,18 @@
     ],
     "warnings": [
         {
+            "message": "Missing item type\nFinds the default case.",
+            "line": " src/__swtch/evaluate.js:20"
+        },
+        {
+            "message": "Missing item type\nFind the first case that matches the query.",
+            "line": " src/__swtch/evaluate.js:33"
+        },
+        {
+            "message": "Missing item type\nFind all cases that match a given query.",
+            "line": " src/__swtch/evaluate.js:54"
+        },
+        {
             "message": "Missing item type\nExecutes the first c_se found.\nRemember: the cases are stored in an array\nby order of addition. Thus, cases added first will have\npriority over those added later.",
             "line": " src/__swtch/exec.js:20"
         },
@@ -232,18 +244,6 @@
         {
             "message": "Missing item type\nInvokes the case's value when exec is invoked.\nTakes the case itself as first argument and\nthe value with which 'exec' was invoked with as second.",
             "line": " src/__swtch/exec.js:52"
-        },
-        {
-            "message": "Missing item type\nFinds the default case.",
-            "line": " src/__swtch/find.js:20"
-        },
-        {
-            "message": "Missing item type\nFind the findFirst case that matches the query.",
-            "line": " src/__swtch/find.js:33"
-        },
-        {
-            "message": "Missing item type\nFind findAll cases that match a given query.",
-            "line": " src/__swtch/find.js:54"
         },
         {
             "message": "Missing item type\nBasically creates the c_se array and\nadds cases if passed an array of cases\nat start.",

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/__swtch/find.js - swtch</title>
+    <title>src/__swtch/evaluate.js - swtch</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,7 +82,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/__swtch/find.js</h1>
+                        <h1 class="file-heading">File: src/__swtch/evaluate.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -119,12 +119,12 @@ define(function (require, exports, module) {
 
 
 	/**
-	 * Find the findFirst case that matches the query.
+	 * Find the first case that matches the query.
 	 *
 	 * @param  {[type]} query [description]
 	 * @return {[type]}       [description]
 	 */
-	exports.findFirst = function findFirst(query) {
+	exports.first = function first(query) {
 		var matchedCase = _.find(this.cases, function (c_se) {
 			return this.match(c_se, query);
 		}, this);
@@ -140,12 +140,12 @@ define(function (require, exports, module) {
 	};
 
 	/**
-	 * Find findAll cases that match a given query.
+	 * Find all cases that match a given query.
 	 *
 	 * @param  {[type]} query [description]
 	 * @return {[type]}       [description]
 	 */
-	exports.findAll = function findAll(query) {
+	exports.all = function all(query) {
 
 		var matchedCases = _.filter(this.cases, function (c_se) {
 			return this.match(c_se, query);

@@ -31,12 +31,12 @@ define(function (require, exports, module) {
 
 
 	/**
-	 * Find the findFirst case that matches the query.
+	 * Find the first case that matches the query.
 	 *
 	 * @param  {[type]} query [description]
 	 * @return {[type]}       [description]
 	 */
-	exports.findFirst = function findFirst(query) {
+	exports.first = function first(query) {
 		var matchedCase = _.find(this.cases, function (c_se) {
 			return this.match(c_se, query);
 		}, this);
@@ -52,12 +52,12 @@ define(function (require, exports, module) {
 	};
 
 	/**
-	 * Find findAll cases that match a given query.
+	 * Find all cases that match a given query.
 	 *
 	 * @param  {[type]} query [description]
 	 * @return {[type]}       [description]
 	 */
-	exports.findAll = function findAll(query) {
+	exports.all = function all(query) {
 
 		var matchedCases = _.filter(this.cases, function (c_se) {
 			return this.match(c_se, query);

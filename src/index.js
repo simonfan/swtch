@@ -109,8 +109,7 @@ define(function (require, exports, module) {
 		},
 	});
 
-
 	swtch
-		.assignProto(require('./__swtch/find'))
+		.assignProto(require('./__swtch/evaluate'))
 		.assignProto(require('./__swtch/exec'));
 });

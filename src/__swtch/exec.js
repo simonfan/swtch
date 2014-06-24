@@ -28,7 +28,7 @@ define(function (require, exports, module) {
 	 */
 	exports.execFirst = function execFirst(query) {
 
-		var matchedCase = this.findFirst(query);
+		var matchedCase = this.first(query);
 
 		if (matchedCase) {
 			return this.execCase(matchedCase, query);
@@ -42,7 +42,7 @@ define(function (require, exports, module) {
 	 * @return {[type]}       [description]
 	 */
 	exports.exec = function exec(query) {
-		var matchedCases = this.findAll(query);
+		var matchedCases = this.all(query);
 
 		return _.map(matchedCases, function (c, index) {
 			return this.execCase(c, query);
