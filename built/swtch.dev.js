@@ -12,9 +12,153 @@
 
 /* jshint ignore:end */
 
-define('swtch',['require','exports','module','lodash','subject'],function (require, exports, module) {
+define('__swtch/find',['require','exports','module','lodash'],function (require, exports, module) {
 	
 
+	var _ = require('lodash');
+
+	/**
+	 * Finds the default case.
+	 *
+	 * @return {[type]} [description]
+	 */
+	function findDefault() {
+
+		return _.find(this.cases, function (c_se) {
+			return c_se.condition === 'default';
+		});
+	}
+
+
+	/**
+	 * Find the findFirst case that matches the query.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.findFirst = function findFirst(query) {
+		var matchedCase = _.find(this.cases, function (c_se) {
+			return this.match(c_se, query);
+		}, this);
+
+
+		// if no match is found,
+		// return the default case
+		matchedCase = matchedCase || findDefault.call(this);
+
+		// if no default case was defined, simply return null.
+
+		return matchedCase;
+	};
+
+	/**
+	 * Find findAll cases that match a given query.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.findAll = function findAll(query) {
+
+		var matchedCases = _.filter(this.cases, function (c_se) {
+			return this.match(c_se, query);
+		}, this);
+
+		// if matchedCases array is empty, add the default to it
+		// if a default case was defined.
+		if (matchedCases.length === 0) {
+
+			var df = findDefault.call(this);
+
+			if (df) {
+				matchedCases.push(df);
+			}
+		}
+
+		return matchedCases;
+	};
+});
+
+//     swtch
+//     (c) simonfan
+//     swtch is licensed under the MIT terms.
+
+/**
+ * AMD and CJS module.
+ *
+ * @module swtch
+ */
+
+/* jshint ignore:start */
+
+/* jshint ignore:end */
+
+define('__swtch/exec',['require','exports','module','lodash'],function (require, exports, module) {
+	
+
+	var _ = require('lodash');
+
+	/**
+	 * Executes the first c_se found.
+	 * Remember: the cases are stored in an array
+	 * by order of addition. Thus, cases added first will have
+	 * priority over those added later.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.execFirst = function execFirst(query) {
+
+		var matchedCase = this.findFirst(query);
+
+		if (matchedCase) {
+			return this.execCase(matchedCase, query);
+		}
+	};
+
+	/**
+	 * Executes all cases that match the value, in the order they were added.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.exec = function exec(query) {
+		var matchedCases = this.findAll(query);
+
+		return _.map(matchedCases, function (c, index) {
+			return this.execCase(c, query);
+		}, this);
+	};
+
+	/**
+	 * Invokes the case's value when exec is invoked.
+	 * Takes the case itself as first argument and
+	 * the value with which 'exec' was invoked with as second.
+	 *
+	 * @param  {[type]} c_se  [description]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.execCase = function execCase(c_se, query) {
+		return c_se.value.call(c_se.context);
+	};
+});
+
+//     swtch
+//     (c) simonfan
+//     swtch is licensed under the MIT terms.
+
+/**
+ * AMD and CJS module.
+ *
+ * @module swtch
+ */
+
+/* jshint ignore:start */
+
+/* jshint ignore:end */
+
+define('swtch',['require','exports','module','lodash','subject','./__swtch/find','./__swtch/exec'],function (require, exports, module) {
+	
 
 	var _       = require('lodash'),
 		subject = require('subject');
@@ -22,180 +166,97 @@ define('swtch',['require','exports','module','lodash','subject'],function (requi
 	var swtch = module.exports = subject({
 
 		/**
-		 * Basically creates the situation array and
-		 * adds situations if passed an array of situations
+		 * Basically creates the c_se array and
+		 * adds cases if passed an array of cases
 		 * at start.
 		 *
-		 * @param  {[type]} situations [description]
+		 * @param  {[type]} cases [description]
 		 * @return {[type]}            [description]
 		 */
-		initialize: function initializeSwtch(situations) {
+		initialize: function initializeSwtch(cases) {
 
 
-			this.situations = [];
+			this.cases = [];
 
-			_.each(situations, function (c) {
+			_.each(cases, function (c) {
 
-				this.situation(c.condition, c.callback);
+				this.when(c.condition, c.value);
 
 			}, this);
 		},
 
 		/**
-		 * Transforms the received condition into a function
-		 * that when ran returns either true or false.
-		 *
-		 * @param  {[type]} condition [description]
-		 * @return {[type]}           [description]
+		 * Checks if a case is valid query the
+		 * @param  {[type]} c_se    [description]
+		 * @param  {[type]} query [description]
+		 * @return {[type]}         [description]
 		 */
-		parseCondition: function parseCondition(condition) {
+		match: function match(c_se, query) {
 
-			if (_.isString(condition) || _.isNumber(condition)) {
+			// direct reference to the condition.
+			var condition = c_se.condition;
 
-				return function testStringCondition(value) {
-					return condition === value;
-				};
+			if (_.isRegExp(condition)) {
 
-			} else if (_.isRegExp(condition)) {
-
-				return _.bind(condition.test, condition);
+				return condition.test(query);
 
 			} else if (_.isFunction(condition)) {
 
-				return condition;
-
-			}
-		},
-
-		/**
-		 * Defines a situation/case. Basically converts the
-		 * condiition passed into a function that returns either true or false
-		 * and adds the situation to the tail of the situations array.
-		 *
-		 * Situations are ordered and those added first have priority over those
-		 * added later.
-		 *
-		 * @param  {[type]}   condition [description]
-		 * @param  {Function} callback  [description]
-		 * @return {[type]}             [description]
-		 */
-		situation: function defineSituation(condition, callback) {
-
-			if (arguments.length === 1 && _.isFunction(condition)) {
-				// if there is only one argument
-				// and that argument is a function
-				// it is actually the callback for the unmatched
-				// situation.
-
-
-				return this.unmatched(arguments[0]);
+				return condition(query);
 
 			} else {
-				// otherwise, the call defines a situation
+				// (_.isString(condition) || _.isNumber(condition) || _.isBoolean(condition))
 
-				var situation = {
-					callback: callback,
-					test    : this.parseCondition(condition)
+				return condition === query;
+			}
+		},
+
+		/**
+		 * Defines a case.
+		 *
+		 * @return {[type]} [description]
+		 */
+		when: function when() {
+
+			// parse out arguments
+			var c_se;
+
+			if (arguments.length === 1 && _.isObject(arguments[0])) {
+				// arguments = [case]
+				c_se = arguments[0];
+			} else {
+				// arguments = [condition, value, context]
+				c_se = {
+					condition: arguments[0],
+					value    : arguments[1],
+					context  : arguments[2]
 				};
-
-				// add to situations
-				this.situations.push(situation);
-
-				return this;
 			}
-		},
 
-
-		/**
-		 * Defines the callback to be executed in case no match
-		 * is found.
-		 *
-		 * @param  {Function} callback [description]
-		 * @return {[type]}            [description]
-		 */
-		unmatched: function unmatchedSituation(callback) {
-
-
-			this.unmatchedCallback = callback;
+			// push case to the cases array
+			this.cases.push(c_se);
 
 			return this;
 		},
 
 		/**
-		 * The property that holds the callback function that will
-		 * be executed in case no match is found for the value.
-		 * By default it is an noop.
-		 *
-		 * @type {[type]}
-		 */
-		unmatchedCallback: _.noop,
-
-		/**
-		 * Executes the first situation found.
-		 * Remember: the situations are stored in an array
-		 * by order of addition. Thus, situations added first will have
-		 * priority over those added later.
+		 * Defines the default value. To be used when no
+		 * other case is matched.
 		 *
 		 * @param  {[type]} value [description]
 		 * @return {[type]}       [description]
 		 */
-		execFirst: function execFirst(value) {
+		d_fault: function d_fault(value, context) {
 
-			var match = _.find(this.situations, function (situation) {
-				return situation.test.call(this, value);
-			}, this);
-
-			var callback = match ? match.callback : this.unmatchedCallback;
-
-
-			return this.execCallback(callback, value);
-		},
-
-		/**
-		 * Executes all situations that match the value, in the order they were added.
-		 *
-		 * @param  {[type]} value [description]
-		 * @return {[type]}       [description]
-		 */
-		exec: function exec(value) {
-
-
-			var matched = false;
-
-			_.each(this.situations, function (situation) {
-
-				if (situation.test(value)) {
-
-					matched = true;
-
-					this.execCallback(situation.callback, value);
-				}
-
-			}, this);
-
-			// run unmatched situation callback
-			if (!matched) {
-				this.execCallback(this.unmatchedCallback, value);
-			}
-
+			this.when('default', value, context);
 
 			return this;
 		},
-
-		/**
-		 * Executes the callback of the situation.
-		 * Should be overridden for custom behaviour.
-		 *
-		 * @param  {Function} callback [description]
-		 * @param  {[type]}   value    [description]
-		 * @return {[type]}            [description]
-		 */
-		execCallback: function execCallback(callback, value) {
-
-
-			return callback.call(this, value);
-		},
-
 	});
+
+
+	swtch
+		.assignProto(require('./__swtch/find'))
+		.assignProto(require('./__swtch/exec'));
 });
 

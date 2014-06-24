@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>swtch - swtch</title>
+    <title>src/__swtch/exec.js - swtch</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,38 +82,76 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>swtch Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/__swtch/exec.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+//     swtch
+//     (c) simonfan
+//     swtch is licensed under the MIT terms.
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src___swtch_exec.js.html#l5"><code>src&#x2F;__swtch&#x2F;exec.js:5</code></a>
-        </div>
-    
+/**
+ * AMD and CJS module.
+ *
+ * @module swtch
+ */
 
-    
-</div>
+/* jshint ignore:start */
+if (typeof define !== &#x27;function&#x27;) { var define = require(&#x27;amdefine&#x27;)(module) }
+/* jshint ignore:end */
 
+define(function (require, exports, module) {
+	&#x27;use strict&#x27;;
 
+	var _ = require(&#x27;lodash&#x27;);
 
-<div class="box intro">
-    <p>AMD and CJS module.</p>
+	/**
+	 * Executes the first c_se found.
+	 * Remember: the cases are stored in an array
+	 * by order of addition. Thus, cases added first will have
+	 * priority over those added later.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.execFirst = function execFirst(query) {
 
-</div>
+		var matchedCase = this.findFirst(query);
 
+		if (matchedCase) {
+			return this.execCase(matchedCase, query);
+		}
+	};
 
+	/**
+	 * Executes all cases that match the value, in the order they were added.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.exec = function exec(query) {
+		var matchedCases = this.findAll(query);
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
+		return _.map(matchedCases, function (c, index) {
+			return this.execCase(c, query);
+		}, this);
+	};
 
-    <div class="yui3-u-1-2">
-        
-    </div>
+	/**
+	 * Invokes the case&#x27;s value when exec is invoked.
+	 * Takes the case itself as first argument and
+	 * the value with which &#x27;exec&#x27; was invoked with as second.
+	 *
+	 * @param  {[type]} c_se  [description]
+	 * @param  {[type]} value [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.execCase = function execCase(c_se, query) {
+		return c_se.value.call(c_se.context);
+	};
+});
+
+    </pre>
 </div>
 
                     </div>

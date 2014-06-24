@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>swtch - swtch</title>
+    <title>src/__swtch/find.js - swtch</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -82,38 +82,91 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>swtch Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: src/__swtch/find.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
+//     swtch
+//     (c) simonfan
+//     swtch is licensed under the MIT terms.
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/src___swtch_exec.js.html#l5"><code>src&#x2F;__swtch&#x2F;exec.js:5</code></a>
-        </div>
-    
+/**
+ * AMD and CJS module.
+ *
+ * @module swtch
+ */
 
-    
-</div>
+/* jshint ignore:start */
+if (typeof define !== &#x27;function&#x27;) { var define = require(&#x27;amdefine&#x27;)(module) }
+/* jshint ignore:end */
+
+define(function (require, exports, module) {
+	&#x27;use strict&#x27;;
+
+	var _ = require(&#x27;lodash&#x27;);
+
+	/**
+	 * Finds the default case.
+	 *
+	 * @return {[type]} [description]
+	 */
+	function findDefault() {
+
+		return _.find(this.cases, function (c_se) {
+			return c_se.condition === &#x27;default&#x27;;
+		});
+	}
 
 
+	/**
+	 * Find the findFirst case that matches the query.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.findFirst = function findFirst(query) {
+		var matchedCase = _.find(this.cases, function (c_se) {
+			return this.match(c_se, query);
+		}, this);
 
-<div class="box intro">
-    <p>AMD and CJS module.</p>
 
-</div>
+		// if no match is found,
+		// return the default case
+		matchedCase = matchedCase || findDefault.call(this);
 
+		// if no default case was defined, simply return null.
 
+		return matchedCase;
+	};
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-    </div>
+	/**
+	 * Find findAll cases that match a given query.
+	 *
+	 * @param  {[type]} query [description]
+	 * @return {[type]}       [description]
+	 */
+	exports.findAll = function findAll(query) {
 
-    <div class="yui3-u-1-2">
-        
-    </div>
+		var matchedCases = _.filter(this.cases, function (c_se) {
+			return this.match(c_se, query);
+		}, this);
+
+		// if matchedCases array is empty, add the default to it
+		// if a default case was defined.
+		if (matchedCases.length === 0) {
+
+			var df = findDefault.call(this);
+
+			if (df) {
+				matchedCases.push(df);
+			}
+		}
+
+		return matchedCases;
+	};
+});
+
+    </pre>
 </div>
 
                     </div>

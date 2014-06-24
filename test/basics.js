@@ -33,7 +33,7 @@
 			var cases = swtch([
 				{
 					condition: /some-string/,
-					callback : function () {
+					value : function () {
 
 						control['some-string'] = true;
 
@@ -47,7 +47,7 @@
 					return 'qjweiqwek';
 				};
 
-			cases.situation(condition, callback);
+			cases.when(condition, callback);
 
 
 
