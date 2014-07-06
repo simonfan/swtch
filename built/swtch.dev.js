@@ -38,7 +38,7 @@ define('__swtch/evaluate',['require','exports','module','lodash'],function (requ
 	 */
 	exports.first = function first(query) {
 		var matchedCase = _.find(this.cases, function (c_se) {
-			return this.match(c_se, query);
+			return this.match(c_se.condition, query);
 		}, this);
 
 
@@ -60,7 +60,7 @@ define('__swtch/evaluate',['require','exports','module','lodash'],function (requ
 	exports.all = function all(query) {
 
 		var matchedCases = _.filter(this.cases, function (c_se) {
-			return this.match(c_se, query);
+			return this.match(c_se.condition, query);
 		}, this);
 
 		// if matchedCases array is empty, add the default to it
@@ -191,10 +191,7 @@ define('swtch',['require','exports','module','lodash','subject','./__swtch/evalu
 		 * @param  {[type]} query [description]
 		 * @return {[type]}         [description]
 		 */
-		match: function match(c_se, query) {
-
-			// direct reference to the condition.
-			var condition = c_se.condition;
+		match: function match(condition, query) {
 
 			if (_.isRegExp(condition)) {
 

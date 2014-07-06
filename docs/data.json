@@ -192,7 +192,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 69,
+            "line": 66,
             "description": "Defines a case.",
             "return": {
                 "description": "[description]",
@@ -203,7 +203,7 @@
         },
         {
             "file": "src/index.js",
-            "line": 97,
+            "line": 94,
             "description": "Defines the default value. To be used when no\nother case is matched.",
             "params": [
                 {
@@ -255,11 +255,11 @@
         },
         {
             "message": "Missing item type\nDefines a case.",
-            "line": " src/index.js:69"
+            "line": " src/index.js:66"
         },
         {
             "message": "Missing item type\nDefines the default value. To be used when no\nother case is matched.",
-            "line": " src/index.js:97"
+            "line": " src/index.js:94"
         }
     ]
 }

@@ -38,7 +38,7 @@ define(function (require, exports, module) {
 	 */
 	exports.first = function first(query) {
 		var matchedCase = _.find(this.cases, function (c_se) {
-			return this.match(c_se, query);
+			return this.match(c_se.condition, query);
 		}, this);
 
 
@@ -60,7 +60,7 @@ define(function (require, exports, module) {
 	exports.all = function all(query) {
 
 		var matchedCases = _.filter(this.cases, function (c_se) {
-			return this.match(c_se, query);
+			return this.match(c_se.condition, query);
 		}, this);
 
 		// if matchedCases array is empty, add the default to it

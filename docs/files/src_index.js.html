@@ -134,10 +134,7 @@ define(function (require, exports, module) {
 		 * @param  {[type]} query [description]
 		 * @return {[type]}         [description]
 		 */
-		match: function match(c_se, query) {
-
-			// direct reference to the condition.
-			var condition = c_se.condition;
+		match: function match(condition, query) {
 
 			if (_.isRegExp(condition)) {
 
